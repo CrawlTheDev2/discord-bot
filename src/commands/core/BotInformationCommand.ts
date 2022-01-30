@@ -1,15 +1,18 @@
-import { BaseCommand, CommandContext } from "@/utils/defs";
+import { BaseCommand, CommandContext } from "@utils/defs";
 import { Message, MessageEmbed } from "discord.js";
 
-class StatisticsCommand extends BaseCommand {
+class BotInformationCommand extends BaseCommand {
   constructor() {
-    super("stats");
+    super("bot-info");
   }
 
   async handle(context: CommandContext, msg: Message) {
+    const { commandsExecuted, messagesSent } = context.client.cache,
+      uptime = Math.round(process.uptime() / 60);
+
     const statsEmbed = new MessageEmbed({
-      title: "Statistics",
-      description: "Some stats of the bot are shown below",
+      title: "Bot Information",
+      description: "Some infos of the bot are shown below",
       thumbnail: {
         url: context.client.user?.avatarURL() ?? "",
       },
@@ -17,8 +20,12 @@ class StatisticsCommand extends BaseCommand {
         {
           name: "Client",
           value: `
-\`${context.client.cache.commandsExecuted + 1}\` commands executed today
-          `,
+
+Uptime: \`${uptime}\` minutes *(%90 accuracy)*
+
+\`${commandsExecuted + 1}\` commands executed today
+\`${messagesSent}\` messages sent today
+`,
         },
       ],
       footer: {
@@ -32,4 +39,4 @@ class StatisticsCommand extends BaseCommand {
   }
 }
 
-export default StatisticsCommand;
+export default BotInformationCommand;

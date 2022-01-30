@@ -1,4 +1,4 @@
-import { BaseCommand, CommandContext } from "@/utils/defs";
+import { BaseCommand, CommandContext } from "@utils/defs";
 import { Message } from "discord.js";
 
 class PingCommand extends BaseCommand {

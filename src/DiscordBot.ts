@@ -11,6 +11,7 @@ class DiscordBot extends Client {
   commands: Map<string, BaseCommand> = new Map<string, BaseCommand>();
   cache = {
     commandsExecuted: 0,
+    messagesSent: 0,
   };
 
   async start(): Promise<void> {

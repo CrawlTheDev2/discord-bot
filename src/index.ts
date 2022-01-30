@@ -1,7 +1,7 @@
 import "module-alias/register";
 import "dotenv/config";
 import DiscordBot from "./DiscordBot";
-import { Deps } from "@/utils/deps";
+import { Deps } from "@utils/deps";
 
 const client = Deps.add<DiscordBot>(
   DiscordBot,

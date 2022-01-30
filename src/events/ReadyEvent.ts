@@ -1,6 +1,6 @@
 import { Constants, MessageEmbed, TextChannel } from "discord.js";
 import { BaseEvent } from "@utils/defs";
-import { Deps } from "@/utils/deps";
+import { Deps } from "@utils/deps";
 import DiscordBot from "@/DiscordBot";
 
 class ReadyEvent extends BaseEvent {
