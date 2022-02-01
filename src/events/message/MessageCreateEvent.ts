@@ -1,22 +1,26 @@
-import { Constants, Message, TextChannel } from "discord.js";
+import { Constants, Message } from "discord.js";
 import { BaseEvent, CommandContext } from "@utils/defs";
 import { Deps } from "@utils/deps";
 import DiscordBot from "@/DiscordBot";
+import { getRepository } from "typeorm";
+import { CommandLogEntity } from "@utils/typeorm/entities/CommandLogEntity";
 
 class MessageCreateEvent extends BaseEvent {
-  constructor(private client = Deps.get<DiscordBot>(DiscordBot)) {
+  constructor(
+    private client = Deps.get<DiscordBot>(DiscordBot),
+    private commandLogsRepository = getRepository(CommandLogEntity),
+  ) {
     super(Constants.Events.MESSAGE_CREATE);
   }
 
   async handle(msg: Message) {
-    if (msg.author.bot) return;
+    if (!msg.guild || msg.author.bot) return;
 
-    this.client.cache.messagesSent++;
+    const guild = this.client.cache.guilds.get(msg.guild.id);
 
-    const clientLogChannel = this.client.channels.cache.get(
-        this.client.constants.DeveloperLogChannels.COMMAND_EXECUTIONS,
-      ) as TextChannel | undefined,
-      prefix = this.client.configs.Client.PREFIX;
+    if (!guild) return await msg.reply("Guild configuration not found.");
+
+    const prefix = guild.prefix;
 
     if (msg.content.startsWith(prefix)) {
       const [command, ...commandArgs] = msg.content
@@ -29,11 +33,20 @@ class MessageCreateEvent extends BaseEvent {
       if (cmd) {
         await cmd.handle(new CommandContext(), msg, commandArgs);
 
-        this.client.cache.commandsExecuted++;
-
-        await clientLogChannel?.send(
-          `Command '${command}' executed by ${msg.author.tag}.`,
-        );
+        const newCommandLog = this.commandLogsRepository.create({
+            name: cmd.name,
+            guild: {
+              id: msg.guild.id,
+              name: msg.guild.name,
+            },
+            executor: {
+              id: msg.author.id,
+              name: msg.author.username,
+            },
+            executedAt: new Date(),
+          }),
+          savedCommandLog = await this.commandLogsRepository.save(newCommandLog);
+        this.client.cache.logs.commandLogs.set(savedCommandLog.id, savedCommandLog);
       }
     }
   }

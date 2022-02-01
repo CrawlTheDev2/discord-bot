@@ -7,12 +7,11 @@ class BotInformationCommand extends BaseCommand {
   }
 
   async handle(context: CommandContext, msg: Message) {
-    const { commandsExecuted, messagesSent } = context.client.cache,
-      uptime = Math.round(process.uptime() / 60);
+    const commandLogs = await context.cache.logs.commandLogs;
 
     const statsEmbed = new MessageEmbed({
       title: "Bot Information",
-      description: "Some infos of the bot are shown below",
+      description: "Some info of the bot are shown below",
       thumbnail: {
         url: context.client.user?.avatarURL() ?? "",
       },
@@ -20,11 +19,9 @@ class BotInformationCommand extends BaseCommand {
         {
           name: "Client",
           value: `
+Uptime: \`${Math.round(process.uptime() / 60)}\` minutes *(%90 accuracy)*
 
-Uptime: \`${uptime}\` minutes *(%90 accuracy)*
-
-\`${commandsExecuted + 1}\` commands executed today
-\`${messagesSent}\` messages sent today
+\`${commandLogs.size + 1}\` commands executed *(total)*
 `,
         },
       ],

@@ -1,7 +1,18 @@
-const Configurations = {
-  Client: {
-    PREFIX: "&",
-  },
+import { entities } from "@typeorm/entities";
+import { ConnectionOptions } from "typeorm";
+
+const Configs = {
+  Client: {},
+  Database: {
+    type: "mysql",
+    host: process.env.MYSQL_DATABASE_HOST,
+    port: Number(process.env.MYSQL_DATABASE_PORT),
+    username: process.env.MYSQL_DATABASE_USERNAME,
+    password: process.env.MYSQL_DATABASE_PASSWORD,
+    database: process.env.MYSQL_DATABASE_NAME,
+    entities,
+    synchronize: true,
+  } as ConnectionOptions,
 };
 
-export default Configurations;
+export default Configs;
