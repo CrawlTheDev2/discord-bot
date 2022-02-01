@@ -24,7 +24,7 @@ export class CommandContext {
   constructor(
     private _client = Deps.get<DiscordBot>(DiscordBot),
     private _guildsRepository = getRepository(GuildEntity),
-    private _commandLogsRepository = getRepository(CommandLogEntity),
+    private _commandLogsRepository = getRepository(CommandLogEntity)
   ) {}
 
   get client(): DiscordBot {

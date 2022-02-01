@@ -7,9 +7,9 @@ class MessageDeleteEvent extends BaseEvent {
   }
 
   async handle(msg: Message) {
-    const logChannel = msg.guild?.channels.cache.find(
-      (c) => c.name === "audit-logs",
-    ) as TextChannel | undefined;
+    const logChannel = msg.guild?.channels.cache.find((c) => c.name === "audit-logs") as
+      | TextChannel
+      | undefined;
 
     const fetchedLogs = await msg.guild?.fetchAuditLogs({
       limit: 1,
@@ -25,7 +25,7 @@ class MessageDeleteEvent extends BaseEvent {
 
     if (target.id === msg.author.id)
       await logChannel?.send(
-        `A message by ${msg.author.tag} was deleted by ${executor?.tag}.`,
+        `A message by ${msg.author.tag} was deleted by ${executor?.tag}.`
       );
     else await logChannel?.send(notFoundMsg);
   }

@@ -14,7 +14,7 @@ const start = async () => {
     DiscordBot,
     new DiscordBot({
       intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES"],
-    }),
+    })
   );
 
   client.start();

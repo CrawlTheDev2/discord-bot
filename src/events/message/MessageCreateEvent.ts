@@ -8,7 +8,7 @@ import { CommandLogEntity } from "@utils/typeorm/entities/CommandLogEntity";
 class MessageCreateEvent extends BaseEvent {
   constructor(
     private client = Deps.get<DiscordBot>(DiscordBot),
-    private commandLogsRepository = getRepository(CommandLogEntity),
+    private commandLogsRepository = getRepository(CommandLogEntity)
   ) {
     super(Constants.Events.MESSAGE_CREATE);
   }

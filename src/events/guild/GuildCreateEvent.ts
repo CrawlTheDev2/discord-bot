@@ -8,7 +8,7 @@ import DiscordBot from "@/DiscordBot";
 class ReadyEvent extends BaseEvent {
   constructor(
     private client = Deps.get<DiscordBot>(DiscordBot),
-    private guildRepository = getRepository(GuildEntity),
+    private guildRepository = getRepository(GuildEntity)
   ) {
     super(Constants.Events.GUILD_CREATE);
   }

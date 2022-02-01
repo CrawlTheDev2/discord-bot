@@ -20,7 +20,7 @@ class DiscordBot extends Client {
   constructor(
     opts: ClientOptions,
     private guildsRepository = getRepository(GuildEntity),
-    private commandLogsRepository = getRepository(CommandLogEntity),
+    private commandLogsRepository = getRepository(CommandLogEntity)
   ) {
     super(opts);
   }
