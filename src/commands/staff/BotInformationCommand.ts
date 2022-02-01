@@ -3,7 +3,10 @@ import { Message, MessageEmbed } from "discord.js";
 
 class BotInformationCommand extends BaseCommand {
   constructor() {
-    super("bot-info");
+    super("bot-info", {
+      enabled: true,
+      onlyStaffs: true
+    });
   }
 
   async handle(context: CommandContext, msg: Message) {

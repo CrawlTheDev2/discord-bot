@@ -45,7 +45,7 @@ export class CommandContext {
 }
 
 export abstract class BaseCommand {
-  constructor(private _name: string, private _enabled: boolean = true) {}
+  constructor(private _name: string, private _options: CommandOptions) {}
 
   abstract handle(context: CommandContext, msg: Message, ...args: any): any;
 
@@ -53,9 +53,14 @@ export abstract class BaseCommand {
     return this._name;
   }
 
-  get enabled(): boolean {
-    return this._enabled;
+  get options(): CommandOptions {
+    return this._options;
   }
+}
+
+export interface CommandOptions {
+  enabled: boolean;
+  onlyStaffs?: boolean;
 }
 
 export interface Constants {}

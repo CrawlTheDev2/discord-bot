@@ -31,6 +31,13 @@ class MessageCreateEvent extends BaseEvent {
         cmd = this.client.commands.get(command);
 
       if (cmd) {
+        if (
+          cmd.options.onlyStaffs &&
+          !this.client.configs.Client.OWNERS.includes(msg.author.id)
+        ) {
+          return await msg.reply("You are not Staff.");
+        }
+
         await cmd.handle(new CommandContext(), msg, commandArgs);
 
         const newCommandLog = this.commandLogsRepository.create({

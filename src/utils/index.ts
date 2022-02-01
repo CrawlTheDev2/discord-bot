@@ -39,7 +39,7 @@ export async function registerCommands(client: DiscordBot, dir: string) {
       const { default: Command } = await import(path.join(dir, file));
       const command: BaseCommand = new Command();
 
-      if (!command.enabled) continue;
+      if (!command.options.enabled) continue;
       client.commands.set(command.name, command);
     }
   }

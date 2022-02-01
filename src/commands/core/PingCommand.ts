@@ -3,7 +3,9 @@ import { Message } from "discord.js";
 
 class PingCommand extends BaseCommand {
   constructor() {
-    super("ping");
+    super("ping", {
+      enabled: true,
+    });
   }
 
   async handle(context: CommandContext, msg: Message) {

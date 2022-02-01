@@ -2,7 +2,9 @@ import { entities } from "@typeorm/entities";
 import { ConnectionOptions } from "typeorm";
 
 const Configs = {
-  Client: {},
+  Client: {
+    OWNERS: ["748366237788012695"],
+  },
   Database: {
     type: "mysql",
     host: process.env.MYSQL_DATABASE_HOST,
