@@ -1,8 +1,8 @@
-import DiscordBot from "@/DiscordBot";
-import Constants from "@utils/constants";
 import { Message } from "discord.js";
 import { getRepository, Repository } from "typeorm";
-import { Deps } from "./deps";
+
+import DiscordBot from "@/DiscordBot";
+import { Deps } from "./";
 import { CommandLogEntity } from "./typeorm/entities/CommandLogEntity";
 import { GuildEntity } from "./typeorm/entities/GuildEntity";
 
@@ -62,8 +62,6 @@ export interface CommandOptions {
   enabled: boolean;
   onlyStaffs?: boolean;
 }
-
-export interface Constants {}
 
 export interface ClientCache {
   guilds: Map<string, GuildEntity>;

@@ -1,15 +1,15 @@
-import { BaseCommand, CommandContext } from "@utils/defs";
+import { Definetions } from "@/utils";
 import { Message, MessageEmbed } from "discord.js";
 
-class BotInformationCommand extends BaseCommand {
+class BotInformationCommand extends Definetions.BaseCommand {
   constructor() {
     super("bot-info", {
       enabled: true,
-      onlyStaffs: true
+      onlyStaffs: true,
     });
   }
 
-  async handle(context: CommandContext, msg: Message) {
+  async handle(context: Definetions.CommandContext, msg: Message) {
     const commandLogs = await context.cache.logs.commandLogs;
 
     const statsEmbed = new MessageEmbed({

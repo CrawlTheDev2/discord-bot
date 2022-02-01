@@ -1,7 +1,12 @@
 import path from "path";
 import { promises as fs } from "fs";
+
 import DiscordBot from "@/DiscordBot";
 import { BaseCommand, BaseEvent } from "./defs";
+
+export { Deps } from "./deps";
+export * as Definetions from "./defs";
+export { Constants } from "./constants";
 
 export async function registerEvents(client: DiscordBot, dir: string) {
   const filePath = path.join(__dirname, dir);

@@ -1,9 +1,9 @@
 import { Constants } from "discord.js";
-import { BaseEvent } from "@utils/defs";
-import { Deps } from "@utils/deps";
+
+import { Definetions, Deps } from "@/utils";
 import DiscordBot from "@/DiscordBot";
 
-class ReadyEvent extends BaseEvent {
+class ReadyEvent extends Definetions.BaseEvent {
   constructor(private client = Deps.get<DiscordBot>(DiscordBot)) {
     super(Constants.Events.CLIENT_READY);
   }

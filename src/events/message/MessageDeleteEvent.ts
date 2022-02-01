@@ -1,7 +1,7 @@
-import { BaseEvent } from "@utils/defs";
 import { Constants, Message, TextChannel } from "discord.js";
+import { Definetions } from "@/utils";
 
-class MessageDeleteEvent extends BaseEvent {
+class MessageDeleteEvent extends Definetions.BaseEvent {
   constructor() {
     super(Constants.Events.MESSAGE_DELETE);
   }
@@ -24,9 +24,7 @@ class MessageDeleteEvent extends BaseEvent {
     const { executor, target } = deletionLog;
 
     if (target.id === msg.author.id)
-      await logChannel?.send(
-        `A message by ${msg.author.tag} was deleted by ${executor?.tag}.`
-      );
+      await logChannel?.send(`A message by ${msg.author.tag} was deleted by ${executor?.tag}.`);
     else await logChannel?.send(notFoundMsg);
   }
 }

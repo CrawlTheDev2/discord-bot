@@ -1,3 +1,1 @@
-const Constants = {};
-
-export default Constants;
+export const Constants = {};

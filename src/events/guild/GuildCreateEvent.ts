@@ -1,11 +1,11 @@
 import { Constants, Guild } from "discord.js";
-import { BaseEvent } from "@utils/defs";
 import { getRepository } from "typeorm";
-import { GuildEntity } from "@utils/typeorm/entities/GuildEntity";
-import { Deps } from "@/utils/deps";
-import DiscordBot from "@/DiscordBot";
 
-class GuildCreateEvent extends BaseEvent {
+import DiscordBot from "@/DiscordBot";
+import { Definetions, Deps } from "@/utils";
+import { GuildEntity } from "@typeorm/entities/GuildEntity";
+
+class GuildCreateEvent extends Definetions.BaseEvent {
   constructor(
     private client = Deps.get<DiscordBot>(DiscordBot),
     private guildRepository = getRepository(GuildEntity)

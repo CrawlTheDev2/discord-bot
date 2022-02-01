@@ -1,18 +1,19 @@
 import { ActivityOptions, Client, ClientOptions } from "discord.js";
-import { registerCommands, registerEvents } from "@utils/index";
-import { BaseCommand, BaseEvent, ClientCache } from "@utils/defs";
-import Constants from "@utils/constants";
-import Configs from "@/configs";
 import { getRepository } from "typeorm";
-import { GuildEntity } from "./utils/typeorm/entities/GuildEntity";
-import { CommandLogEntity } from "./utils/typeorm/entities/CommandLogEntity";
+
+import { Constants, Definetions, registerCommands, registerEvents } from "@/utils";
+import Configs from "@/configs";
+import { GuildEntity } from "@typeorm/entities/GuildEntity";
+import { CommandLogEntity } from "@typeorm/entities/CommandLogEntity";
 
 class DiscordBot extends Client {
-  readonly constants: typeof Constants = Constants;
-  readonly configs: typeof Configs = Configs;
-  events: Map<string, BaseEvent> = new Map<string, BaseEvent>();
-  commands: Map<string, BaseCommand> = new Map<string, BaseCommand>();
-  cache: ClientCache = {
+  readonly constants = Constants;
+  readonly configs = Configs;
+
+  events: Map<string, Definetions.BaseEvent> = new Map<string, Definetions.BaseEvent>();
+  commands: Map<string, Definetions.BaseCommand> = new Map<string, Definetions.BaseCommand>();
+
+  cache: Definetions.ClientCache = {
     guilds: new Map<string, GuildEntity>(),
     logs: { commandLogs: new Map<string, CommandLogEntity>() },
   };

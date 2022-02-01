@@ -1,5 +1,6 @@
-import { entities } from "@typeorm/entities";
 import { ConnectionOptions } from "typeorm";
+
+import { entities } from "@typeorm/entities";
 
 const Configs = {
   Client: {

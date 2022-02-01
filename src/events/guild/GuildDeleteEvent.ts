@@ -1,9 +1,9 @@
 import { Constants, Guild } from "discord.js";
-import { BaseEvent } from "@utils/defs";
-import { Deps } from "@/utils/deps";
-import DiscordBot from "@/DiscordBot";
 
-class GuildDeleteEvent extends BaseEvent {
+import DiscordBot from "@/DiscordBot";
+import { Definetions, Deps } from "@/utils";
+
+class GuildDeleteEvent extends Definetions.BaseEvent {
   constructor(private client = Deps.get<DiscordBot>(DiscordBot)) {
     super(Constants.Events.GUILD_DELETE);
   }

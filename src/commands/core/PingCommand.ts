@@ -1,14 +1,14 @@
-import { BaseCommand, CommandContext } from "@utils/defs";
+import { Definetions } from "@/utils";
 import { Message } from "discord.js";
 
-class PingCommand extends BaseCommand {
+class PingCommand extends Definetions.BaseCommand {
   constructor() {
     super("ping", {
       enabled: true,
     });
   }
 
-  async handle(context: CommandContext, msg: Message) {
+  async handle(context: Definetions.CommandContext, msg: Message) {
     console.log(context.client.user);
 
     await msg.reply("Ping command works fine:!");

@@ -1,11 +1,11 @@
 import { Constants, Message } from "discord.js";
-import { BaseEvent, CommandContext } from "@utils/defs";
-import { Deps } from "@utils/deps";
-import DiscordBot from "@/DiscordBot";
 import { getRepository } from "typeorm";
-import { CommandLogEntity } from "@utils/typeorm/entities/CommandLogEntity";
 
-class MessageCreateEvent extends BaseEvent {
+import DiscordBot from "@/DiscordBot";
+import { Definetions, Deps } from "@/utils";
+import { CommandLogEntity } from "@typeorm/entities/CommandLogEntity";
+
+class MessageCreateEvent extends Definetions.BaseEvent {
   constructor(
     private client = Deps.get<DiscordBot>(DiscordBot),
     private commandLogsRepository = getRepository(CommandLogEntity)
@@ -31,14 +31,11 @@ class MessageCreateEvent extends BaseEvent {
         cmd = this.client.commands.get(command);
 
       if (cmd) {
-        if (
-          cmd.options.onlyStaffs &&
-          !this.client.configs.Client.OWNERS.includes(msg.author.id)
-        ) {
+        if (cmd.options.onlyStaffs && !this.client.configs.Client.OWNERS.includes(msg.author.id)) {
           return await msg.reply("You are not Staff.");
         }
 
-        await cmd.handle(new CommandContext(), msg, commandArgs);
+        await cmd.handle(new Definetions.CommandContext(), msg, commandArgs);
 
         const newCommandLog = this.commandLogsRepository.create({
             name: cmd.name,
