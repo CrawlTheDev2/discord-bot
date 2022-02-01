@@ -5,7 +5,7 @@ import { GuildEntity } from "@utils/typeorm/entities/GuildEntity";
 import { Deps } from "@/utils/deps";
 import DiscordBot from "@/DiscordBot";
 
-class ReadyEvent extends BaseEvent {
+class GuildCreateEvent extends BaseEvent {
   constructor(
     private client = Deps.get<DiscordBot>(DiscordBot),
     private guildRepository = getRepository(GuildEntity)
@@ -14,7 +14,9 @@ class ReadyEvent extends BaseEvent {
   }
 
   async handle(guild: Guild) {
-    const guildExists = await this.guildRepository.findOne(guild.id);
+    console.log("Joined to:", guild.id);
+
+    const guildExists = this.client.cache.guilds.get(guild.id);
 
     if (guildExists) {
       await guild.systemChannel?.send("Hey good to see you again guys");
@@ -36,4 +38,4 @@ class ReadyEvent extends BaseEvent {
   }
 }
 
-export default ReadyEvent;
+export default GuildCreateEvent;
