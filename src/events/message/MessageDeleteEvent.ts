@@ -1,19 +1,22 @@
-import { Constants, Message, TextChannel } from "discord.js";
-import { Definetions } from "@/utils";
+import { Message, TextChannel } from "discord.js";
+import { BaseEvent } from "@/utils";
 
-class MessageDeleteEvent extends Definetions.BaseEvent {
+class MessageDeleteEvent extends BaseEvent {
   constructor() {
-    super(Constants.Events.MESSAGE_DELETE);
+    super({
+      on: "MESSAGE_DELETE",
+      enabled: true
+    });
   }
 
   async handle(msg: Message) {
-    const logChannel = msg.guild?.channels.cache.find((c) => c.name === "audit-logs") as
-      | TextChannel
-      | undefined;
+    const logChannel = msg.guild?.channels.cache.find(
+      (c) => c.name === "audit-logs"
+    ) as TextChannel | undefined;
 
     const fetchedLogs = await msg.guild?.fetchAuditLogs({
       limit: 1,
-      type: "MESSAGE_DELETE",
+      type: "MESSAGE_DELETE"
     });
 
     const deletionLog = fetchedLogs?.entries.first();
@@ -24,7 +27,9 @@ class MessageDeleteEvent extends Definetions.BaseEvent {
     const { executor, target } = deletionLog;
 
     if (target.id === msg.author.id)
-      logChannel?.send(`A message by ${msg.author.tag} was deleted by ${executor?.tag}.`);
+      logChannel?.send(
+        `A message by ${msg.author.tag} was deleted by ${executor?.tag}.`
+      );
     else logChannel?.send(notFoundMsg);
   }
 }

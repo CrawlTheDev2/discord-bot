@@ -1,5 +1,5 @@
 export class Deps {
-  private static deps: Map<any, any> = new Map<any, any>();
+  private static deps = new Map<any, any>();
 
   static get<T>(type: any): T {
     return this.deps.get(type) ?? this.add(type, new type());

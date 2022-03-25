@@ -7,7 +7,10 @@ import { BaseCommand, BaseEvent } from "./defs";
 const events: BaseEvent[] = [],
   commands: BaseCommand[] = [];
 
-export async function registerEvents(client: DiscordBot, dir: string): Promise<BaseEvent[]> {
+export async function registerEvents(
+  client: DiscordBot,
+  dir: string
+): Promise<BaseEvent[]> {
   const filePath = path.join(__dirname, dir);
   const files = await fs.readdir(filePath);
 
@@ -21,7 +24,8 @@ export async function registerEvents(client: DiscordBot, dir: string): Promise<B
       const { default: Event } = await import(path.join(dir, file));
       const event: BaseEvent = new Event();
 
-      if (!event.enabled) continue;
+      if (!event.options.enabled) continue;
+
       events.push(event);
       client.on(event.on, event.handle.bind(event));
     }
@@ -30,7 +34,10 @@ export async function registerEvents(client: DiscordBot, dir: string): Promise<B
   return events;
 }
 
-export async function registerCommands(client: DiscordBot, dir: string): Promise<BaseCommand[]> {
+export async function registerCommands(
+  client: DiscordBot,
+  dir: string
+): Promise<BaseCommand[]> {
   const filePath = path.join(__dirname, dir);
   const files = await fs.readdir(filePath);
 

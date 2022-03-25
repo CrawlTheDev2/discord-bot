@@ -1,11 +1,14 @@
-import { Constants, Guild } from "discord.js";
+import { Guild } from "discord.js";
 
 import DiscordBot from "@/DiscordBot";
-import { Definetions, Deps } from "@/utils";
+import { BaseEvent, Deps } from "@/utils";
 
-class GuildDeleteEvent extends Definetions.BaseEvent {
+class GuildDeleteEvent extends BaseEvent {
   constructor(private client = Deps.get<DiscordBot>(DiscordBot)) {
-    super(Constants.Events.GUILD_DELETE);
+    super({
+      on: "GUILD_DELETE",
+      enabled: true
+    });
   }
 
   async handle(guild: Guild) {
@@ -16,7 +19,9 @@ class GuildDeleteEvent extends Definetions.BaseEvent {
       .send(
         `I hope I didn't make a mistake. I will wait for you to add me back to the **${guild.name}** server :)`
       )
-      .catch(() => console.log("[GUILD_DELETE] Cannot send message to", guildOwner.id));
+      .catch(() =>
+        console.log("[GUILD_DELETE] Cannot send message to", guildOwner.id)
+      );
   }
 }
 

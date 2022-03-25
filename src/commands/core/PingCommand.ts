@@ -1,17 +1,20 @@
-import { Definetions } from "@/utils";
+import { BaseCommand, CommandContext } from "@/utils";
 import { Message } from "discord.js";
 
-class PingCommand extends Definetions.BaseCommand {
+class PingCommand extends BaseCommand {
   constructor() {
-    super("ping", {
-      enabled: true,
+    super({
+      name: "PING",
+      enabled: true
     });
   }
 
-  async handle(context: Definetions.CommandContext, msg: Message) {
-    console.log(context.client.user);
+  async handle(ctx: CommandContext, msg: Message): Promise<any> {
+    const firstMsg = await msg.channel.send("Pinging...");
 
-    await msg.reply("Ping command works fine:!");
+    await firstMsg.edit(
+      `Pong: ${(firstMsg.createdTimestamp - msg.createdTimestamp).toFixed(0)}ms`
+    );
   }
 }
 

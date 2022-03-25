@@ -4,7 +4,7 @@ import { entities } from "@/utils/typeorm";
 
 const Configs = {
   Client: {
-    OWNERS: ["748366237788012695"],
+    OwnerIDs: ["748366237788012695"]
   },
   Database: {
     type: "mysql",
@@ -14,8 +14,8 @@ const Configs = {
     password: process.env.MYSQL_DATABASE_PASSWORD,
     database: process.env.MYSQL_DATABASE_NAME,
     entities,
-    synchronize: true,
-  } as ConnectionOptions,
+    synchronize: true
+  } as ConnectionOptions
 };
 
 export default Configs;

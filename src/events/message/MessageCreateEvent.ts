@@ -1,17 +1,20 @@
-import { Constants, Message } from "discord.js";
+import { Message } from "discord.js";
 
 import DiscordBot from "@/DiscordBot";
-import { Definetions, Deps } from "@/utils";
+import { BaseEvent, CommandContext, Deps } from "@/utils";
 
-class MessageCreateEvent extends Definetions.BaseEvent {
+class MessageCreateEvent extends BaseEvent {
   constructor(private client = Deps.get<DiscordBot>(DiscordBot)) {
-    super(Constants.Events.MESSAGE_CREATE);
+    super({
+      on: "MESSAGE_CREATE",
+      enabled: true
+    });
   }
 
   async handle(msg: Message) {
     if (!msg.guild || msg.author.bot) return;
 
-    const guild = this.client.cacheManager.guilds.get(msg.guild.id);
+    const guild = this.client.cacheManager?.guilds.get(msg.guild.id);
 
     if (!guild) return msg.reply("Guild configuration not found.");
 
@@ -23,13 +26,20 @@ class MessageCreateEvent extends Definetions.BaseEvent {
           .slice(prefix.length)
           .trim()
           .split(/\s+/),
-        cmd = this.client.cacheManager.commands.get(command);
+        cmd = this.client.cacheManager?.commands.get(command);
+
+      console.log(this.client.cacheManager?.commands);
 
       if (!cmd) return;
-      if (cmd.options.onlyStaff && !this.client.configs.Client.OWNERS.includes(msg.author.id))
-        return msg.reply("You are not Staff.");
 
-      cmd.handle(new Definetions.CommandContext(), msg, commandArgs);
+      const isOwner = this.client.configs.Client.OwnerIDs.includes(
+        msg.author.id
+      );
+
+      if (cmd.options.onlyStaff && !isOwner)
+        return msg.reply("You are not a staff.");
+
+      cmd.handle(new CommandContext(), msg, commandArgs);
     }
   }
 }

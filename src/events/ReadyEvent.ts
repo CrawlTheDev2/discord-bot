@@ -1,14 +1,15 @@
-import { Constants } from "discord.js";
-
-import { Definetions, Deps } from "@/utils";
+import { BaseEvent, Deps } from "@/utils";
 import DiscordBot from "@/DiscordBot";
 
-class ReadyEvent extends Definetions.BaseEvent {
+class ReadyEvent extends BaseEvent {
   constructor(private client = Deps.get<DiscordBot>(DiscordBot)) {
-    super(Constants.Events.CLIENT_READY);
+    super({
+      on: "CLIENT_READY",
+      enabled: true
+    });
   }
 
-  async handle() {
+  async handle(...args: any) {
     console.log("Signed in as " + this.client.user?.tag);
   }
 }

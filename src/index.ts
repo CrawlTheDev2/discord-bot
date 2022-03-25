@@ -8,17 +8,17 @@ import DiscordBot from "./DiscordBot";
 import Configs from "./configs";
 import { Deps } from "./utils";
 
-const start = async () => {
+(async function () {
+  console.log("Connecting to database");
   await createConnection(Configs.Database);
+  console.log("Connected to database");
 
   const client = Deps.add(
     DiscordBot,
     new DiscordBot({
-      intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES"],
+      intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES"]
     })
   );
 
   client.start();
-};
-
-start();
+})();
