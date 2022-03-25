@@ -1,2 +1,4 @@
 Add:
 - validations to commands (permission check, args checl etc.)
+- multiple languages
+- registrar

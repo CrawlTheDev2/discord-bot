@@ -13,27 +13,26 @@ class GuildCreateEvent extends Definetions.BaseEvent {
     super(Constants.Events.GUILD_CREATE);
   }
 
-  async handle(guild: Guild) {
-    console.log("Joined to:", guild.id);
+  async handle({ id, systemChannel, name }: Guild) {
+    console.log("Joined to:", id);
 
-    const guildExists = this.client.cache.guilds.get(guild.id);
+    const cachedGuild = this.client.cacheManager.guilds.get(id);
 
-    if (guildExists) {
-      await guild.systemChannel?.send("Hey good to see you again guys");
-      this.client.cache.guilds.set(guildExists.id, guildExists);
-      return console.log("Guild exists:", guildExists.id);
+    if (cachedGuild) {
+      systemChannel?.send("Hey good to see you again guys");
+      this.client.cacheManager.guilds.set(cachedGuild.id, cachedGuild);
+      return console.log("Guild exists:", cachedGuild.id);
     }
 
-    await guild.systemChannel?.send("Hey I'm new here");
+    systemChannel?.send("Hey I'm new here");
 
     const newGuild = this.guildRepository.create({
-        id: guild.id,
-        name: guild.name,
+        id,
+        name,
       }),
       savedGuild = await this.guildRepository.save(newGuild);
 
-    this.client.cache.guilds.set(savedGuild.id, savedGuild);
-
+    this.client.cacheManager.guilds.set(savedGuild.id, savedGuild);
     console.log("Guild saved:", savedGuild.id);
   }
 }

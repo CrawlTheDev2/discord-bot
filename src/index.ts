@@ -11,7 +11,7 @@ import { Deps } from "./utils";
 const start = async () => {
   await createConnection(Configs.Database);
 
-  const client = Deps.add<DiscordBot>(
+  const client = Deps.add(
     DiscordBot,
     new DiscordBot({
       intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES"],

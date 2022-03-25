@@ -2,8 +2,7 @@ import { Message } from "discord.js";
 import { getRepository, Repository } from "typeorm";
 
 import DiscordBot from "@/DiscordBot";
-import { Deps } from "./";
-import { CommandLogEntity } from "./typeorm/entities/CommandLogEntity";
+import { CacheManager, Deps } from "./";
 import { GuildEntity } from "./typeorm/entities/GuildEntity";
 
 export abstract class BaseEvent {
@@ -23,8 +22,7 @@ export abstract class BaseEvent {
 export class CommandContext {
   constructor(
     private _client = Deps.get<DiscordBot>(DiscordBot),
-    private _guildsRepository = getRepository(GuildEntity),
-    private _commandLogsRepository = getRepository(CommandLogEntity)
+    private _guildsRepository = getRepository(GuildEntity)
   ) {}
 
   get client(): DiscordBot {
@@ -35,12 +33,8 @@ export class CommandContext {
     return this._guildsRepository;
   }
 
-  get commandLogsRepository(): Repository<CommandLogEntity> {
-    return this._commandLogsRepository;
-  }
-
-  get cache(): ClientCache {
-    return this._client.cache;
+  get cacheManager(): CacheManager {
+    return this._client.cacheManager;
   }
 }
 
@@ -60,14 +54,9 @@ export abstract class BaseCommand {
 
 export interface CommandOptions {
   enabled: boolean;
-  onlyStaffs?: boolean;
+  onlyStaff?: boolean;
 }
 
 export interface ClientCache {
   guilds: Map<string, GuildEntity>;
-  logs: LogsCache;
-}
-
-export interface LogsCache {
-  commandLogs: Map<string, CommandLogEntity>;
 }

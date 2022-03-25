@@ -19,13 +19,13 @@ class MessageDeleteEvent extends Definetions.BaseEvent {
     const deletionLog = fetchedLogs?.entries.first();
     const notFoundMsg = `A message by ${msg.author.tag} was deleted. but we don't know by who.`;
 
-    if (!deletionLog) return await logChannel?.send(notFoundMsg);
+    if (!deletionLog) return logChannel?.send(notFoundMsg);
 
     const { executor, target } = deletionLog;
 
     if (target.id === msg.author.id)
-      await logChannel?.send(`A message by ${msg.author.tag} was deleted by ${executor?.tag}.`);
-    else await logChannel?.send(notFoundMsg);
+      logChannel?.send(`A message by ${msg.author.tag} was deleted by ${executor?.tag}.`);
+    else logChannel?.send(notFoundMsg);
   }
 }
 
