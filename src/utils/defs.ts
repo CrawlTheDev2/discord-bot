@@ -67,7 +67,7 @@ export class CommandContext {
 
   constructor(public client = Deps.get<DiscordBot>(DiscordBot)) {}
 
-  get cacheManager(): CacheManager {
-    return this.cacheManager;
+  get cacheManager(): CacheManager | undefined {
+    return this.client.cacheManager;
   }
 }
